@@ -5,10 +5,12 @@ using UnityEngine;
 public class AnimalManager : MonoBehaviour {
 
     public GameObject animalPrefab;
-    public static int tankSize = 25;
+    public static int tankSize = 50;
 
     static int numAnimal = 20;
     public static GameObject[] allAnimal = new GameObject[numAnimal];
+
+    public static Vector3 goalPos = Vector3.zero;
 	// Use this for initialization
 	void Start () {
 		
@@ -22,5 +24,9 @@ public class AnimalManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+        if(Random.Range(0, 10000) < 50)
+        {
+            goalPos = new Vector3(Random.Range(-tankSize, tankSize), 0, Random.Range(-tankSize, tankSize));
+        }
 	}
 }
