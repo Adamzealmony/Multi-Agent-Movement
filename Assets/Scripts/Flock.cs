@@ -62,22 +62,23 @@ public class Flock : MonoBehaviour {
         int groupSize = 0;
         foreach (GameObject go in gos)
         {
-            if(go != this.gameObject)
+            if (go == this.gameObject) {
+                continue;
+            }
+
+            dist = Vector3.Distance(go.transform.position, this.transform.position);
+            if(dist <= neighbourDistance)
             {
-                dist = Vector3.Distance(go.transform.position, this.transform.position);
-                if(dist <= neighbourDistance)
+                vcentre += go.transform.position;
+                groupSize++;
+
+                if(dist < 5.0f)
                 {
-                    vcentre += go.transform.position;
-                    groupSize++;
-
-                    if(dist < 5.0f)
-                    {
-                        vavoid = vavoid + (this.transform.position - go.transform.position);
-                    }
-
-                    Flock anotherFlock = go.GetComponent<Flock>();
-                    gSpeed = gSpeed + anotherFlock.speed;
+                    vavoid = vavoid + (this.transform.position - go.transform.position);
                 }
+
+                Flock anotherFlock = go.GetComponent<Flock>();
+                gSpeed = gSpeed + anotherFlock.speed;
             }
         }
 
