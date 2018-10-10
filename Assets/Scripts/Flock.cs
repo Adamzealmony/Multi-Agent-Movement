@@ -8,15 +8,22 @@ public class Flock : MonoBehaviour {
     float rotationSpeed = 4.0f;
     Vector3 averageHeading;
     Vector3 averagePosition;
+
+    Vector3 vcentre = Vector3.zero;
+    Vector3 vavoid = Vector3.zero;
+    float dist;
+    Vector3 goalPos;
+    int groupSize;
+    float gSpeed;
+
+
     float neighbourDistance = 100.0f;
 
     bool turning = false;
     // Use this for initialization
 
     void Start () {
-
         speed = Random.Range(0.5f, 1);
-
     }
 	
 	// Update is called once per frame
@@ -50,36 +57,21 @@ public class Flock : MonoBehaviour {
         GameObject[] gos;
         gos = AnimalManager.allAnimal;
 
-        Vector3 vcentre = Vector3.zero;
-        Vector3 vavoid = Vector3.zero;
-        float gSpeed = 0.1f;
 
-        Vector3 goalPos = GetPoint.goalPos;
+        vcentre = Vector3.zero;
+        vavoid = Vector3.zero;
+        gSpeed = 0.1f;
+
+        goalPos = GetPoint.goalPos;
       
-
-        float dist;
-
-        int groupSize = 0;
+        groupSize = 0;
         foreach (GameObject go in gos)
         {
             if (go == this.gameObject) {
                 continue;
             }
 
-            dist = Vector3.Distance(go.transform.position, this.transform.position);
-            if(dist <= neighbourDistance)
-            {
-                vcentre += go.transform.position;
-                groupSize++;
-
-                if(dist < 5.0f)
-                {
-                    vavoid = vavoid + (this.transform.position - go.transform.position);
-                }
-
-                Flock anotherFlock = go.GetComponent<Flock>();
-                gSpeed = gSpeed + anotherFlock.speed;
-            }
+            Separate(go);
         }
 
         if(groupSize > 0)
@@ -91,6 +83,23 @@ public class Flock : MonoBehaviour {
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
             }
+        }
+    }
+
+    void Separate(GameObject go) {
+        dist = Vector3.Distance(go.transform.position, this.transform.position);
+        if(dist <= neighbourDistance)
+        {
+            vcentre += go.transform.position;
+            groupSize++;
+
+            if(dist < 5.0f)
+            {
+                vavoid = vavoid + (this.transform.position - go.transform.position);
+            }
+
+            Flock anotherFlock = go.GetComponent<Flock>();
+            gSpeed = gSpeed + anotherFlock.speed;
         }
     }
 }
