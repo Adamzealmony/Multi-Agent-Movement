@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\AnimalManager.cs" />
     <Compile Include="Assets\Scripts\Flock.cs" />
+    <Compile Include="Assets\Scripts\GetPoint.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/Game AI/Multi-Agent Movement/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

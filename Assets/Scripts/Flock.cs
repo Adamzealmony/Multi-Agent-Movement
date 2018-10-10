@@ -17,7 +17,7 @@ public class Flock : MonoBehaviour {
 
         speed = Random.Range(0.5f, 1);
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -54,9 +54,8 @@ public class Flock : MonoBehaviour {
         Vector3 vavoid = Vector3.zero;
         float gSpeed = 0.1f;
 
-        Vector3 temp = Input.mousePosition;
-        temp.y = 0;
-        Vector3 goalPos = AnimalManager.goalPos;
+        Vector3 goalPos = GetPoint.goalPos;
+      
 
         float dist;
 
