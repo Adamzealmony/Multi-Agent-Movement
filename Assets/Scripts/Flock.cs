@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour {
 
-    public float speed = 0.001f;
+    public float speed;
     float rotationSpeed = 4.0f;
     Vector3 averageHeading;
     Vector3 averagePosition;
@@ -14,17 +14,11 @@ public class Flock : MonoBehaviour {
     float dist;
     Vector3 goalPos;
     int groupSize;
-    float gSpeed;
 
 
     float neighbourDistance = 100.0f;
 
     bool turning = false;
-    // Use this for initialization
-
-    void Start () {
-        speed = Random.Range(0.5f, 1);
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -60,7 +54,6 @@ public class Flock : MonoBehaviour {
 
         vcentre = Vector3.zero;
         vavoid = Vector3.zero;
-        gSpeed = 0.1f;
 
         goalPos = GetPoint.goalPos;
       
@@ -77,7 +70,6 @@ public class Flock : MonoBehaviour {
         if(groupSize > 0)
         {
             vcentre = vcentre / groupSize + (goalPos - this.transform.position);
-            speed = gSpeed / groupSize;
             Vector3 direction = (vcentre + vavoid) - transform.position;
             if(direction != Vector3.zero)
             {
@@ -99,7 +91,6 @@ public class Flock : MonoBehaviour {
             }
 
             Flock anotherFlock = go.GetComponent<Flock>();
-            gSpeed = gSpeed + anotherFlock.speed;
         }
     }
 }
